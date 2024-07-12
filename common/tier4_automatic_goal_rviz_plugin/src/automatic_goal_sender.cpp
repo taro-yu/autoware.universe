@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "automatic_goal_sender.hpp"
+bool G_HAS_GOAL_NAME = false;
 
 namespace automatic_goal
 {
@@ -109,7 +110,14 @@ void AutowareAutomaticGoalSender::updateGoalsList()
     ss << std::fixed << std::setprecision(2);
     tf2::Quaternion tf2_quat;
     tf2::convert(goal->pose.orientation, tf2_quat);
-    ss << "G" << i << " (" << goal->pose.position.x << ", ";
+
+    if (!G_HAS_GOAL_NAME){
+      ss << "G" << i << " (" << goal->pose.position.x << ", ";
+    } else{
+      ss << goals_name_list_[i] << " (" << goal->pose.position.x << ", ";
+      // ss << "G" << i << " (" << goal->pose.position.x << ", ";
+    }
+
     ss << goal->pose.position.y << ", " << tf2::getYaw(tf2_quat) << ")";
     goals_achieved_.insert({i++, std::make_pair(ss.str(), 0)});
   }
@@ -167,6 +175,7 @@ void AutowareAutomaticGoalSender::loadGoalsList(const std::string & file_path)
 {
   YAML::Node node = YAML::LoadFile(file_path);
   goals_list_.clear();
+  goals_name_list_.clear();
   for (auto && goal : node) {
     std::shared_ptr<PoseStamped> pose = std::make_shared<PoseStamped>();
     pose->header.frame_id = "map";
@@ -179,6 +188,12 @@ void AutowareAutomaticGoalSender::loadGoalsList(const std::string & file_path)
     pose->pose.orientation.z = goal["orientation_z"].as<double>();
     pose->pose.orientation.w = goal["orientation_w"].as<double>();
     goals_list_.push_back(pose);
+    
+    if (goal["name"]){
+      goals_name_list_.push_back(goal["name"].as<std::string>());
+      G_HAS_GOAL_NAME = true;
+    }
+
   }
   resetAchievedGoals();
   updateGoalsList();

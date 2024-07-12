@@ -115,7 +115,6 @@ void AutowareAutomaticGoalSender::updateGoalsList()
       ss << "G" << i << " (" << goal->pose.position.x << ", ";
     } else{
       ss << goals_name_list_[i] << " (" << goal->pose.position.x << ", ";
-      // ss << "G" << i << " (" << goal->pose.position.x << ", ";
     }
 
     ss << goal->pose.position.y << ", " << tf2::getYaw(tf2_quat) << ")";

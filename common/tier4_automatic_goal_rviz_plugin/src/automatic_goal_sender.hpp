@@ -34,6 +34,8 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
+
 extern bool G_HAS_GOAL_NAME;
 
 namespace automatic_goal

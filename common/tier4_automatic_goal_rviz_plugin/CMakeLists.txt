@@ -14,6 +14,8 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
   src/automatic_goal_sender.cpp
   src/automatic_goal_append_tool.cpp
   src/automatic_goal_panel.cpp
+  src/automatic_route_panel.cpp
+
 )
 
 ament_auto_add_executable(automatic_goal_sender

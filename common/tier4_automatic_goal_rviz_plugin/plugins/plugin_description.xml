@@ -4,6 +4,11 @@
     base_class_type="rviz_common::Panel">
     <description>AutowareAutomaticGoalPanel</description>
   </class>
+   <class
+    type="rviz_plugins::AutowareAutomaticRoutePanel"
+    base_class_type="rviz_common::Panel">
+    <description>AutowareAutomaticRoutePanel</description>
+  </class>
   <class name="rviz_plugins/AutowareAutomaticGoalTool"
     type="rviz_plugins::AutowareAutomaticGoalTool"
     base_class_type="rviz_common::Tool">
